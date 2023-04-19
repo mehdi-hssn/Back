@@ -1,0 +1,170 @@
+<%- include('./../../layout/header'); -%>
+
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Liste des livres</h2>
+                    <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                                class="zmdi zmdi-sort-amount-desc"></i></button>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i
+                                class="zmdi zmdi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            <!-- Exportable Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header mb-2">
+                            <h2>Liste des livres</h2>
+                            <ul class="header-dropdown">
+                                <li class="dropdown">
+                                    <a href="/admin/produits/add" class="btn btn-lg btn-primary">Ajouter un
+                                        livre</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table data-order='[[ 0, "desc" ]]'
+                                       class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>Libelle</th>
+                                        <th>Stock</th>
+                                        <th>Prix</th>
+                                        <th>Image</th>
+                                        <th>Actif</th>
+                                        <th>Activer le produit</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>Libelle</th>
+                                        <th>Stock</th>
+                                        <th>Prix</th>
+                                        <th>Image</th>
+                                        <th>Actif</th>
+                                        <th>Activer le produit</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <% for(var i = 0; i < produits.length; i++) { %>
+                                        <tr>
+                                            <td><%= produits[i].id %></td>
+                                            <td><%- produits[i].libelle %></td>
+                                            <td><%= produits[i].maxqty %></td>
+                                            <td><%= produits[i].prix %></td>
+                                            <td>
+                                                <% if(produits[i].img != null){ %><img class="rounded avatar"
+                                                                                       src="/uploads/produit/<%= produits[i].id; %>/444x472/<%= produits[i].img; %>"/>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if(produits[i].actif == 1) { %>
+                                                    <span class="badge badge-success">Actif</span>
+                                                <% } else { %>
+                                                    <span class="badge badge-danger">Non actif</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <input id="<%= produits[i].id %>" type="checkbox" class="switch-produit"
+                                                <% if(produits[i].actif == 1) { %> checked
+                                                        <% } %>
+                                                       netliva-switch
+                                                       data-active-text="Oui"
+                                                       data-passive-text="Non"
+                                                       data-width="80px"
+                                                />
+                                            </td>
+                                            <td>
+
+                                                <div class="btn-group">
+                                                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                                            type="button" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false"><i class="zmdi zmdi-archive"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="/admin/produits/edit/<%= produits[i].id; %>"
+                                                           class="dropdown-item btn btn-link">Modifier</a>
+                                                        <a class="dropdown-item btn btn-link"
+                                                           href="javascript:void(0);">
+                                                            <form method="POST"
+                                                                  action="/admin/produits/delete/<%= produits[i].id; %>" onsubmit="return confirm('Voulez-vous vraiment supprimer le produit?');">
+                                                                <input type="hidden" name="_method" value="delete"/>
+                                                                <button type="submit" class="base btn btn-link">
+                                                                    Supprimer
+                                                                </button>
+                                                            </form>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    <% } %>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<%- include('./../../layout/js'); -%>
+<script src="https://www.jqueryscript.net/demo/animated-ios-swtich-netliva/src/js/netliva_switch.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.destroy').click(function () {
+            confirm("Are you sure?");
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $(".switch-produit").on('netlivaSwitch.change', function (event, state, element) {
+
+            var s = null;
+            if (state == true) {
+                s = 1;
+            }
+            if (state == false) {
+                s = 0;
+            }
+
+            $.post(
+                '/api/produit/actif/update',
+                {
+                    id: $(this).attr('id'),
+                    statut: s
+                },
+                function (texte_recu) {
+                    console.log(texte_recu);
+                    location.reload();
+                },
+                'json'
+            );
+
+        });
+    });
+</script>
+
+<%- include('./../../layout/end'); -%>
+
+

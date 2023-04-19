@@ -1,0 +1,19 @@
+button.base, input[type="submit"].base, input[type="reset"].base {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.budget img{
+    width: 50px !important;
+    margin-right: 5px;
+}
+
+.difficulte img{
+    width: 50px !important;
+    margin-right: 5px;
+}

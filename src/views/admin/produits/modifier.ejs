@@ -1,0 +1,141 @@
+<%- include('./../../layout/header'); -%>
+
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Modifier</h2>
+                    <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                                class="zmdi zmdi-sort-amount-desc"></i></button>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i
+                                class="zmdi zmdi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <!-- Basic Validation -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Modifier</strong></h2>
+
+                        </div>
+                        <div class="body">
+                            <% if(errors.length > 0){ %>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="alert alert-danger" role="alert">
+                                            <% for(var i = 0;i < errors.length;i++) { %>
+                                                <p class="mb-0">
+                                                    <small><%- errors[i].msg; %></small>
+                                                </p>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <form enctype="multipart/form-data" action="/admin/produits/update"
+                                  id="form_validation" method="POST">
+                                <input type="hidden" name="id" value="<%- produit.id; %>">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Libelle</strong></label>
+                                            <input type="text" class="form-control" placeholder="Libelle" name="libelle"
+                                                   value="<%- produit.libelle; %>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Statut</strong></label>
+                                            <select name="actif" id="actif" class="form-control">
+                                                <option value="false"
+                                                <% if (produit.actif == false) { %> selected
+                                                        <% } %>
+                                                >Non actif
+                                                </option>
+                                                <option value="true"
+                                                <% if (produit.actif == true) { %> selected
+                                                        <% } %>
+                                                >Actif
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Quantité du Stock</strong></label>
+                                            <input type="integer"
+                                                   value="<%- produit.maxqty; %>"
+                                                   class="form-control" placeholder="Quantité" name="maxqty">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Description</strong></label>
+                                            <textarea name="description" cols="30" rows="5" placeholder="Description"
+                                                      class="form-control no-resize summernote"><%- produit.description; %></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="row">
+                                    <div class="col-md-3">
+
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Prix<small>(A l'unité)</small></strong></label>
+
+                                            <input type="text" id="prix" class="form-control" onkeyup="calculerPrixKg()"
+                                                   placeholder="Prix (A l'unité)" name="prix"
+                                                   value="<%- produit.prix; %>">
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                   
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2>Image du produit</h2>
+                                            </div>
+                                            <div class="body">
+                                                <input type="hidden" id="img" value="0" name="img">
+                                                <input type="file" class="dropify_img" name="img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-raised btn-success waves-effect" type="submit">Sauvegarder
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<%- include('./../../layout/js'); -%>
+
+
+
+
+<%- include('./../../layout/end'); -%>
+

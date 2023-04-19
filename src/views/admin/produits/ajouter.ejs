@@ -1,0 +1,154 @@
+<%- include('./../../layout/header'); -%>
+
+<section class="content">
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2>Créer un produit</h2>
+                    <!--<ul class="breadcrumb">-->
+                    <!--<li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Aero</a></li>-->
+                    <!--<li class="breadcrumb-item"><a href="javascript:void(0);">Forms</a></li>-->
+                    <!--<li class="breadcrumb-item active">Form Validation</li>-->
+                    <!--</ul>-->
+                    <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                                class="zmdi zmdi-sort-amount-desc"></i></button>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i
+                                class="zmdi zmdi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <!-- Basic Validation -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Créer un produit</strong></h2>
+                            <ul class="header-dropdown">
+                                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
+                                                        data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                        aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else</a></li>
+                                    </ul>
+                                </li>
+                                <li class="remove">
+                                    <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <% if(errors.length > 0){ %>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="alert alert-danger" role="alert">
+                                            <% for(var i = 0;i < errors.length;i++) { %>
+                                                <p class="mb-0">
+                                                    <small><%- errors[i].msg; %></small>
+                                                </p>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <form enctype="multipart/form-data" action="/admin/produits/create"
+                                  id="form_validation" method="POST">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Libelle</strong></label>
+                                            <input type="text"
+                                                   value="<%- (typeof data !== 'undefined' ? data.libelle : '') %>"
+                                                   class="form-control" placeholder="Libelle" name="libelle">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Statut</strong></label>
+                                            <select name="actif" id="actif" class="form-control">
+
+                                                <option value="false"
+                                                <% if(typeof data !== 'undefined' && data.actif == "false"){ %> selected
+                                                        <% } %>
+                                                >Non actif
+                                                </option>
+                                                <option value="true"
+                                                <% if(typeof data !== 'undefined' && data.actif == "true"){ %> selected
+                                                        <% } %>
+                                                >Actif
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Quantité du Stock</strong></label>
+                                            <input type="integer"
+                                                   value="<%- (typeof data !== 'undefined' ? data.maxqty : '') %>"
+                                                   class="form-control" placeholder="Quantité" name="maxqty">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Description</strong></label>
+                                            <textarea name="description" cols="30" rows="5" placeholder="Description"
+                                                      class="form-control no-resize summernote"><%- (typeof data !== 'undefined' ? data.description : '') %></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+
+                                        <div class="form-group form-float">
+                                            <label for=""><strong>Prix <small>(A l'unité)</small></strong></label>
+
+                                            <input type="text" class="form-control" placeholder="Prix (A l'unité)" name="prix" id="prix" 
+                                                   value="<%- (typeof data !== 'undefined' ? data.prix : '') %>">
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2><strong>Image</strong></h2>
+                                            </div>
+                                            <div class="body">
+                                                <input type="file" class="dropify" name="img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-raised btn-success waves-effect" type="submit">Sauvegarder
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<%- include('./../../layout/js'); -%>
+
+
+
+
+<%- include('./../../layout/end'); -%>
+
